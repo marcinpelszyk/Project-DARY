@@ -1,0 +1,9 @@
+https://dbdiagram.io/d
+
+
+Table category as C {
+  id int [pk, increment]
+  name varchar
+  slug slug
+  is_active boolean
+}
