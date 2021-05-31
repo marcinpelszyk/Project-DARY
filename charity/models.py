@@ -1,7 +1,10 @@
+import datetime
+
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
+
 
 class Category(models.Model):
     """[summary]
@@ -26,7 +29,7 @@ class Institution(models.Model):
 
     name = models.CharField(max_length=100, unique=True)
     description = models.TextField()
-    type_institution = models.CharField(max_length=100,default='fundacja', choices=TYPE_CHOICES)
+    type_institution = models.CharField(max_length=100, default='fundacja', choices=TYPE_CHOICES)
     categories = models.ManyToManyField(Category, related_name='categories')
 
     class Meta:
@@ -50,19 +53,30 @@ class Dotation(models.Model):
     categories = models.ManyToManyField(Category, related_name='category_selection', verbose_name=_('Category'), help_text=_('Wymagany'))
     institution = models.ForeignKey(Institution, on_delete=models.CASCADE)
     # Dilvery Dotation
-    address = models.CharField(verbose_name=_('Data'), help_text=_('Wymagany'), max_length=255)
-    phone_number = models.CharField(verbose_name=_('Data'), help_text=_('Wymagany'), max_length=50)
-    city = models.CharField(verbose_name=_('Data'), help_text=_('Wymagany'), max_length=150)
+    address = models.CharField(verbose_name=_('Adres'), help_text=_('Wymagany'), max_length=255)
+    phone_number = models.CharField(verbose_name=_('Numer telefonu'), help_text=_('Wymagany'), max_length=50)
+    city = models.CharField(verbose_name=_('Miasto'), help_text=_('Wymagany'), max_length=150)
     postcode = models.CharField(verbose_name=_('Kod Pocztowy'), help_text=_('Wymagany'), max_length=50)
-    pick_up_date = models.DateField(verbose_name=_('Data'), help_text=_('Wymagany'), auto_now_add=True)
-    pick_up_time = models.DateTimeField(verbose_name=_('Czas'), help_text=_('Wymagany'), auto_now_add=True)
+    pick_up_date = models.DateField(verbose_name=_('Data'), help_text=_('Wymagany'))
+    pick_up_time = models.TimeField(verbose_name=_('Czas'), help_text=_('Wymagany'))
     pick_up_comment = models.TextField(verbose_name=_('Komentarz'), help_text=_('Wymagany'), max_length=500, blank=True)
     user = models.ForeignKey(User, help_text=_('Użytkownik'), null=True, on_delete=models.CASCADE)
+
+    @property
+    def quantity_bags(self):
+        return sum(self.quantity)
 
 
     class Meta:
         verbose_name = _('Dotation')
         verbose_name_plural = _('Dotations')
+
+    def __str__(self):
+        return self.user
+    
+
+   
+    
 
     
 
