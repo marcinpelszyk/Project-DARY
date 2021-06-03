@@ -9,7 +9,7 @@
 
 from django.db.models import Count, Q
 
-from .models import Category, Institution, Dotation
+from .models import Institution, Dotation
 
 
 def quantity_bags(request):

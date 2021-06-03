@@ -14,8 +14,8 @@ class LandingPageView(ListView):
     template_name = 'charity/home.html'
     paginate_by = 10
     model = Institution
-
-    context_object_name = 'institutions'
+    
+    
 
 
     
