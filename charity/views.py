@@ -1,4 +1,6 @@
+from django.db import models
 from django.db.models import Sum
+from django.db.models.aggregates import Count
 
 from django.views.generic.list import ListView
 from django.shortcuts import render
@@ -8,14 +10,28 @@ from django.views.generic import TemplateView
 from .models import  Category, Institution, Dotation
 
 
-class LandingPageView(View):
+class LandingPageView(ListView):
     template_name = 'charity/home.html'
-    model = Dotation
-    context_object_name = 'dotations'
+    paginate_by = 10
+    model = Institution
 
-    def get_queryset(self):
-        data = Dotation.objects.aggregate(Sum('quantity'))
-        return data
+    context_object_name = 'institutions'
+
+
+    
+
+   
+
+
+
+    
+    
+    
+
+# class LandingPageView(ListView):
+#     template_name = 'charity/home.html'
+#     context_object_name = 'institutions'
+#     paginate_by = 3
 
 class AddDonation(TemplateView):
     template_name = 'charity/form.html'

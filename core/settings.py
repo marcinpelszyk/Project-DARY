@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'charity',
+    'charity.apps.CharityConfig',
 ]
 
 MIDDLEWARE = [
@@ -53,6 +53,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'charity.context_processors.quantity_bags',
+                'charity.context_processors.institution_qty',
             ],
         },
     },
